@@ -19,7 +19,7 @@ const programs = [
       { label: "Awareness Events", value: "500+" },
       { label: "Partner Hospitals", value: "45" },
     ],
-    image: "/sickle-cell-awareness-healthcare-africa.jpg",
+    image: "/ngo-6.jpg",
   },
   {
     icon: GraduationCap,
@@ -32,7 +32,7 @@ const programs = [
       { label: "Schools Partnered", value: "120+" },
       { label: "Scholarships Awarded", value: "5,000+" },
     ],
-    image: "/education-program-african-children-school.jpg",
+    image: "/ngo-15.jpg",
   },
 ]
 
@@ -189,7 +189,7 @@ export default function ProgramsPage() {
         </section>
 
         {/* Community Outreach with elastic animations */}
-        <section ref={outreachRef} className="bg-secondary py-16 lg:py-24 overflow-hidden" id="outreach">
+        {/* <section ref={outreachRef} className="bg-secondary py-16 lg:py-24 overflow-hidden" id="outreach">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <div
               className={`text-center opacity-0 ${outreachVisible ? "animate-blur-in" : ""}`}
@@ -225,13 +225,13 @@ export default function ProgramsPage() {
                   <p className="mt-2 font-semibold text-foreground">{item.title}</p>
                   <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
 
-                  {/* Animated underline */}
+                 
                   <div className="mt-4 mx-auto h-0.5 w-0 bg-accent group-hover:w-12 transition-all duration-500 rounded-full" />
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
       <Footer />
     </div>

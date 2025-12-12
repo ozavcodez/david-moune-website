@@ -15,7 +15,7 @@ export default function HomePage() {
         <Hero />
         <ImpactStats />
         <MissionOverview />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <CTASection />
         <Newsletter />
       </main>

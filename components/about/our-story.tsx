@@ -50,7 +50,7 @@ export function OurStory() {
           >
             <div className="aspect-[4/3] overflow-hidden rounded-lg group">
               <img
-                src="/community-gathering-african-village-children-educa.jpg"
+                src="/ngo-8.jpg"
                 alt="Community gathering"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -59,7 +59,7 @@ export function OurStory() {
               className={`absolute -bottom-6 -left-6 w-48 rounded-lg bg-primary p-4 text-primary-foreground shadow-lg opacity-0 ${isVisible ? "animate-pop" : ""}`}
               style={{ animationDelay: "0.8s", animationFillMode: "forwards" }}
             >
-              <p className="font-serif text-3xl font-bold">2015</p>
+              <p className="font-serif text-3xl font-bold">2020</p>
               <p className="text-sm text-primary-foreground/80">Year Founded</p>
             </div>
 

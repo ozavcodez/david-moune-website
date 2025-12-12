@@ -72,7 +72,7 @@ export function Hero() {
             </div>
           </Animated>
 
-          <Animated animation="fade-up" delay={600}>
+          {/* <Animated animation="fade-up" delay={600}>
             <div className="mt-16 flex flex-wrap gap-8 pt-8 border-t border-background/20">
               {[
                 { value: "50K+", label: "Lives Impacted" },
@@ -85,7 +85,7 @@ export function Hero() {
                 </div>
               ))}
             </div>
-          </Animated>
+          </Animated> */}
         </div>
       </div>
 

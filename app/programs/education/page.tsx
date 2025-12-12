@@ -224,7 +224,7 @@ export default function EducationPage() {
         </section>
 
         {/* Success Stories - Added staggered zoom animations */}
-        <section className="bg-accent py-16 lg:py-24 overflow-hidden">
+        {/* <section className="bg-accent py-16 lg:py-24 overflow-hidden">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <Animated animation="fade-down" className="text-center text-accent-foreground">
               <p className="text-sm font-medium uppercase tracking-wider opacity-80">Success Stories</p>
@@ -266,10 +266,10 @@ export default function EducationPage() {
               ))}
             </StaggeredContainer>
           </div>
-        </section>
+        </section> */}
 
         {/* Impact Numbers - Added animated stats */}
-        <section ref={impactRef} className="bg-foreground py-16 overflow-hidden">
+        {/* <section ref={impactRef} className="bg-foreground py-16 overflow-hidden">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <div className="grid gap-8 text-center md:grid-cols-4">
               {[
@@ -291,7 +291,7 @@ export default function EducationPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CTA - Added zoom-in animation */}
         <section className="py-16 lg:py-24 overflow-hidden">
