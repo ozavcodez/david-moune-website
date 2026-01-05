@@ -30,27 +30,22 @@ export function Header() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
-          : "bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+          ? "bg-[#0a2f35] backdrop-blur-md shadow-sm border-b border-border"
+          : "bg-[#0a2f35] backdrop-blur supports-backdrop-filter]:bg-background/60"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4  lg:px-8">
         <Link href="/" className="group flex items-center gap-3">
           <div className="relative overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/logo.jpg"
               alt="David Mone Foundation"
-              width={48}
-              height={48}
-              className="h-12 w-12 object-cover"
+              width={80}
+              height={80}
+              className=" object-contain"
             />
           </div>
-          <div className="hidden sm:block">
-            <p className="font-serif text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
-              David Mone
-            </p>
-            <p className="text-xs text-accent tracking-widest uppercase font-medium">Foundation</p>
-          </div>
+          
         </Link>
 
         {/* Desktop Navigation - Enhanced with animated underline */}
@@ -59,7 +54,7 @@ export function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className="relative text-sm font-medium text-muted-foreground transition-colors hover:text-primary group py-2 link-underline"
+              className="relative text-sm font-medium text-white/70 transition-colors hover:text-white group py-2 link-underline"
             >
               {item.name}
             </Link>

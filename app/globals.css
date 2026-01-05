@@ -11,7 +11,7 @@
   --card-foreground: oklch(0.2 0.02 180);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.02 180);
-  --primary: oklch(0.28 0.04 175);
+  --primary: oklch(28.33% 0.0308 197.8deg); /* #0a2f35 */
   --primary-foreground: oklch(0.85 0.08 85);
   --secondary: oklch(0.97 0.01 90);
   --secondary-foreground: oklch(0.25 0.03 175);
@@ -23,8 +23,8 @@
   --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(0.9 0.005 90);
   --input: oklch(0.9 0.005 90);
-  --ring: oklch(0.28 0.04 175);
-  --chart-1: oklch(0.28 0.04 175);
+  --ring: var(--primary);
+  --chart-1: var(--primary);
   --chart-2: oklch(0.78 0.12 85);
   --chart-3: oklch(0.45 0.05 175);
   --chart-4: oklch(0.65 0.1 85);
@@ -32,12 +32,12 @@
   --radius: 0.5rem;
   --sidebar: oklch(0.98 0.005 90);
   --sidebar-foreground: oklch(0.2 0.02 180);
-  --sidebar-primary: oklch(0.28 0.04 175);
+  --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: oklch(0.85 0.08 85);
   --sidebar-accent: oklch(0.96 0.005 90);
   --sidebar-accent-foreground: oklch(0.25 0.03 175);
   --sidebar-border: oklch(0.9 0.005 90);
-  --sidebar-ring: oklch(0.28 0.04 175);
+  --sidebar-ring: var(--primary);
 }
 
 .dark {
@@ -78,7 +78,7 @@
 @theme inline {
   --font-sans: "Inter", "Inter Fallback";
   --font-serif: "Playfair Display", "Playfair Display Fallback";
-  --color-brand-teal: oklch(0.28 0.04 175);
+  --color-brand-teal: var(--primary);
   --color-brand-gold: oklch(0.78 0.12 85);
   --color-brand-teal-light: oklch(0.45 0.05 175);
   --color-brand-gold-dark: oklch(0.65 0.1 85);
@@ -184,15 +184,15 @@ html {
   }
 
   .card-hover:hover {
-    border-color: oklch(0.28 0.04 175);
+    border-color: var(--primary);
     box-shadow: 0 4px 16px -2px rgba(26, 58, 58, 0.1);
     transform: translateY(-2px);
   }
 
   /* Input focus effects */
   .input-focus:focus {
-    border-color: oklch(0.28 0.04 175);
-    box-shadow: 0 0 0 3px oklch(0.28 0.04 175 / 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary) / 0.1;
     outline: none;
   }
 
@@ -287,8 +287,8 @@ html {
   animation: pulse-gold 2s ease-in-out infinite;
 }
 
-.animate-shimmer {
-  background: linear-gradient(90deg, oklch(0.28 0.04 175) 0%, oklch(0.78 0.12 85) 50%, oklch(0.28 0.04 175) 100%);
+  .animate-shimmer {
+    background: linear-gradient(90deg, var(--primary) 0%, oklch(0.78 0.12 85) 50%, var(--primary) 100%);
   background-size: 200% 100%;
   animation: shimmer 3s linear infinite;
   -webkit-background-clip: text;
@@ -296,9 +296,9 @@ html {
 }
 
 .animate-gradient {
-  background: linear-gradient(
+    background: linear-gradient(
     -45deg,
-    oklch(0.28 0.04 175),
+    var(--primary),
     oklch(0.35 0.04 175),
     oklch(0.78 0.12 85),
     oklch(0.65 0.1 85)
