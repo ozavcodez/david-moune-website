@@ -7,7 +7,7 @@ import { Heart, GraduationCap, Microscope, Shield } from "lucide-react"
 export const metadata: Metadata = {
   title: "Donate | David Mone Foundation",
   description:
-    "Support the David Mone Foundation's work to end Sickle Cell Disease and provide education access for children in Africa.",
+    "Support David Mone Foundation's work to end Sickle Cell Disease and provide education access for children in Africa.",
 }
 
 const impactExamples = [
@@ -77,10 +77,26 @@ export default function DonatePage() {
                 </p>
 
                 <div className="mt-8 space-y-3">
-                  {impactExamples.map((example) => (
-                    <div key={example.amount} className="flex items-center gap-4 rounded-lg border border-border p-4">
-                      <span className="font-serif text-xl font-bold text-primary">{example.amount}</span>
-                      <span className="text-sm text-muted-foreground">{example.impact}</span>
+                  {impactExamples.map((example, index) => (
+                    <div key={example.amount} className="flex items-start gap-4 rounded-lg border border-border p-4">
+                      <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                        <img
+                          src={
+                            index === 0 ? "/african-children-in-classroom-learning-education-s.jpg" :
+                            index === 1 ? "/medical-research-laboratory-sickle-cell-healthcare.jpg" :
+                            index === 2 ? "/african-female-doctor-portrait-professional.jpg" :
+                            index === 3 ? "/ngo-15.jpg" :
+                            index === 4 ? "/african-man-educator-portrait.jpg" :
+                            "/ngo-1.jpg"
+                          }
+                          alt="Impact example"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <span className="font-serif text-xl font-bold text-primary">{example.amount}</span>
+                        <span className="text-sm text-muted-foreground">{example.impact}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -122,25 +138,35 @@ export default function DonatePage() {
             </div>
 
             <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
+              {[{
                   title: "Monthly Giving",
                   description: "Become a sustaining donor with a recurring monthly gift.",
+                  image: "/ngo-10.jpg",
                 },
                 {
                   title: "Corporate Matching",
                   description: "Double your impact through employer matching programs.",
+                  image: "/ngo-11.jpg",
                 },
                 {
                   title: "Legacy Giving",
                   description: "Include the Foundation in your estate planning.",
+                  image: "/ngo-13.jpg",
                 },
                 {
                   title: "In-Kind Donations",
                   description: "Donate supplies, equipment, or services.",
+                  image: "/ngo-16.jpg",
                 },
               ].map((option) => (
-                <div key={option.title} className="rounded-lg bg-card p-6 border border-border">
+                <div key={option.title} className="rounded-lg bg-card p-6 border border-border text-center">
+                  <div className="mb-4 h-32 overflow-hidden rounded-lg">
+                    <img
+                      src={option.image || "/placeholder.svg"}
+                      alt={option.title}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                   <h3 className="font-semibold text-foreground">{option.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
                 </div>

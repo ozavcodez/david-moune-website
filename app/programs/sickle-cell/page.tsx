@@ -50,7 +50,7 @@ export default function SickleCellPage() {
         {/* Hero - Added slide-in animations */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <img src="/sickle-cell-patient-care-hospital-africa.jpg" alt="" className="h-full w-full object-cover" />
+            <img src="/ngo-6.jpg" alt="" className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-foreground/75" />
           </div>
           <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 lg:px-8 lg:py-32">
@@ -126,7 +126,7 @@ export default function SickleCellPage() {
                 <div className="relative">
                   <div className="aspect-square overflow-hidden rounded-lg bg-secondary p-8">
                     <img
-                      src="/sickle-cell-diagram-educational-medical-illustrat.jpg"
+                      src="/ngo-6.jpg"
                       alt="Sickle Cell Disease diagram"
                       className="h-full w-full object-contain"
                     />
@@ -145,26 +145,37 @@ export default function SickleCellPage() {
               <h2 className="mt-2 font-serif text-3xl font-bold text-foreground sm:text-4xl">
                 Understanding the Global Impact
               </h2>
+              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                Important statistics about Sickle Cell Disease worldwide
+              </p>
             </Animated>
             <StaggeredContainer
               animation="fade-up"
               staggerDelay={100}
-              className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+              className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
             >
               {facts.map((fact, index) => (
                 <div
                   key={index}
-                  className="flex gap-3 rounded-lg bg-card p-4 border border-border hover:shadow-md transition-shadow duration-300"
+                  className="group relative flex flex-col gap-4 rounded-3xl bg-card/50 backdrop-blur-sm p-8 border border-border/50 hover:bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300"
                 >
-                  <AlertCircle className="h-5 w-5 flex-shrink-0 text-primary" />
-                  <p className="text-sm text-muted-foreground">{fact}</p>
+                  {/* Soft decorative circle */}
+                  <div className="absolute -top-8 -right-8 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors duration-500" />
+                  
+                  <div className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                    <AlertCircle className="h-6 w-6 text-primary" />
+                  </div>
+                  
+                  <p className="relative text-base text-foreground leading-relaxed font-normal">
+                    {fact}
+                  </p>
                 </div>
               ))}
             </StaggeredContainer>
           </div>
         </section>
 
-        {/* Our Initiatives - Added zoom-in staggered animations */}
+        {/* Our Initiatives - Added zoom-in staggered animations with images */}
         <section className="py-16 lg:py-24 overflow-hidden">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <Animated animation="fade-up" className="text-center">
@@ -173,22 +184,71 @@ export default function SickleCellPage() {
                 How We're Making Change
               </h2>
             </Animated>
-            <StaggeredContainer animation="zoom-in" staggerDelay={150} className="mt-12 grid gap-8 md:grid-cols-2">
-              {initiatives.map((initiative) => (
-                <div
-                  key={initiative.title}
-                  className="flex gap-4 rounded-lg border border-border p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                >
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <initiative.icon className="h-6 w-6 text-primary" />
+            <div className="mt-12 grid gap-8 lg:grid-cols-2">
+              {/* Left Column - First Two Initiatives */}
+              <div className="space-y-8">
+                {initiatives.slice(0, 2).map((initiative, index) => (
+                  <Animated
+                    key={initiative.title}
+                    animation="fade-right"
+                    delay={index * 150}
+                  >
+                    <div className="group flex gap-6 rounded-2xl border-2 border-border bg-card p-8 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2 transition-all duration-300">
+                      <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <initiative.icon className="h-8 w-8 text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-black text-foreground mb-3">{initiative.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{initiative.description}</p>
+                      </div>
+                    </div>
+                  </Animated>
+                ))}
+                
+                {/* Image Break 1 */}
+                <Animated animation="zoom-in" delay={300}>
+                  <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-border hover:shadow-2xl transition-shadow duration-300">
+                    <img 
+                      src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=600&h=400&fit=crop" 
+                      alt="Healthcare support"
+                      className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">{initiative.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{initiative.description}</p>
+                </Animated>
+              </div>
+
+              {/* Right Column - Image First, Then Last Two Initiatives */}
+              <div className="space-y-8">
+                {/* Image Break 2 */}
+                <Animated animation="zoom-in" delay={150}>
+                  <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-border hover:shadow-2xl transition-shadow duration-300">
+                    <img 
+                      src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=600&h=400&fit=crop" 
+                      alt="Medical research"
+                      className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
-                </div>
-              ))}
-            </StaggeredContainer>
+                </Animated>
+
+                {initiatives.slice(2, 4).map((initiative, index) => (
+                  <Animated
+                    key={initiative.title}
+                    animation="fade-left"
+                    delay={300 + index * 150}
+                  >
+                    <div className="group flex gap-6 rounded-2xl border-2 border-border bg-card p-8 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-2 transition-all duration-300">
+                      <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <initiative.icon className="h-8 w-8 text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-black text-foreground mb-3">{initiative.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{initiative.description}</p>
+                      </div>
+                    </div>
+                  </Animated>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -217,46 +277,7 @@ export default function SickleCellPage() {
           </div>
         </section>
 
-        {/* Resources - Added staggered slide-right animations */}
-        <section className="py-16 lg:py-24 overflow-hidden" id="resources">
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
-            <Animated animation="fade-up" className="text-center">
-              <p className="text-sm font-medium uppercase tracking-wider text-primary">Resources</p>
-              <h2 className="mt-2 font-serif text-3xl font-bold text-foreground sm:text-4xl">
-                Educational Materials & Reports
-              </h2>
-            </Animated>
-            <StaggeredContainer
-              animation="fade-right"
-              staggerDelay={100}
-              className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-            >
-              {[
-                { title: "SCD Patient Guide", type: "PDF Guide", size: "2.4 MB" },
-                { title: "Caregiver Handbook", type: "PDF Guide", size: "1.8 MB" },
-                { title: "2024 Research Report", type: "Annual Report", size: "5.2 MB" },
-                { title: "Awareness Campaign Kit", type: "Resource Pack", size: "12 MB" },
-                { title: "Healthcare Provider Training", type: "Training Materials", size: "8.5 MB" },
-                { title: "Community Screening Guide", type: "PDF Guide", size: "3.1 MB" },
-              ].map((resource) => (
-                <a
-                  key={resource.title}
-                  href="#"
-                  className="flex items-center justify-between rounded-lg border border-border p-4 hover:bg-secondary hover:scale-[1.02] transition-all duration-300"
-                >
-                  <div>
-                    <p className="font-medium text-foreground">{resource.title}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {resource.type} • {resource.size}
-                    </p>
-                  </div>
-                  <Download className="h-5 w-5 text-primary" />
-                </a>
-              ))}
-            </StaggeredContainer>
-          </div>
-        </section>
-
+     
         {/* CTA - Added zoom-in animation */}
         <section className="bg-secondary py-16 lg:py-24 overflow-hidden">
           <Animated animation="zoom-in" className="mx-auto max-w-3xl px-4 text-center lg:px-8">

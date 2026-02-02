@@ -9,18 +9,21 @@ const items = [
     title: "Our Mission",
     description:
       "To end Sickle Cell Disease through research, advocacy, and improved patient care, while ensuring every child has access to quality education regardless of their circumstances.",
+    image: "/ngo-3.jpg",
   },
   {
     icon: Eye,
     title: "Our Vision",
     description:
       "A world where Sickle Cell Disease no longer claims lives and where every child can pursue their dreams through education, building stronger communities and a brighter future.",
+    image: "/ngo-6.jpg",
   },
   {
     icon: Heart,
     title: "Our Values",
     description:
       "Compassion, integrity, collaboration, and excellence guide everything we do. We believe in treating every individual with dignity and working together for lasting impact.",
+    image: "/ngo-7.jpg",
   },
 ]
 
@@ -50,6 +53,15 @@ export function MissionVision() {
               <div className="mx-auto mt-2 h-0.5 w-0 bg-accent group-hover:w-16 transition-all duration-500 rounded-full" />
 
               <p className="mt-4 text-muted-foreground leading-relaxed">{item.description}</p>
+
+              {/* Image for each item */}
+              <div className="mt-6 h-40 overflow-hidden rounded-lg">
+                <img
+                  src={item.image || "/placeholder.svg"}
+                  alt={item.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
             </div>
           ))}
         </div>

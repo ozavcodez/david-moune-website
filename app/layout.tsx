@@ -10,7 +10,7 @@ const playfair = Playfair_Display({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "David Mone Foundation | Ending Sickle Cell Disease & Empowering Education",
   description:
-    "The David Mone Foundation is dedicated to ending Sickle Cell Disease through research, advocacy, and improved care, while providing access to quality education for all children globally.",
+    "David Mone Foundation is dedicated to ending Sickle Cell Disease through research, advocacy, and improved care, while providing access to quality education for all children globally.",
   keywords: [
     "Sickle Cell Disease",
     "SCD",

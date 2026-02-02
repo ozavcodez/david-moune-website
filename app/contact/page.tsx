@@ -7,7 +7,7 @@ import { Mail, Phone, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin } fr
 export const metadata: Metadata = {
   title: "Contact Us | David Mone Foundation",
   description:
-    "Get in touch with the David Mone Foundation. We're here to answer your questions about our programs, partnerships, and ways to get involved.",
+    "Get in touch with David Mone Foundation. We're here to answer your questions about our programs, partnerships, and ways to get involved.",
 }
 
 const contactInfo = [
@@ -166,31 +166,45 @@ export default function ContactPage() {
               <h2 className="font-serif text-3xl font-bold text-foreground sm:text-4xl">Frequently Asked Questions</h2>
             </div>
             <div className="mt-12 space-y-4">
-              {[
-                {
+              {[{
                   question: "How can I donate to the Foundation?",
                   answer:
                     "You can donate online through our secure donation page, via bank transfer, or by check. Visit our Donate page for all options.",
+                  image: "/ngo-14.jpg",
                 },
                 {
                   question: "How do I volunteer with the Foundation?",
                   answer:
                     "Visit our Get Involved page to see current volunteer opportunities and submit an application. We'll match you with opportunities based on your skills and interests.",
+                  image: "/african-man-educator-portrait.jpg",
                 },
                 {
                   question: "Can my organization partner with the Foundation?",
                   answer:
                     "Yes! We welcome partnerships with healthcare providers, educational institutions, corporations, and other NGOs. Contact our partnerships team to discuss opportunities.",
+                  image: "/community-gathering-african-village-children-educa.jpg",
                 },
                 {
                   question: "How is my donation used?",
                   answer:
                     "90% of all donations go directly to our programs. You can view our annual reports for detailed financial breakdowns and impact metrics.",
+                  image: "/ngo-18.jpg",
                 },
-              ].map((faq) => (
+              ].map((faq, index) => (
                 <div key={faq.question} className="rounded-lg border border-border p-6">
-                  <h3 className="font-semibold text-foreground">{faq.question}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{faq.answer}</p>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                      <img
+                        src={faq.image || "/placeholder.svg"}
+                        alt="FAQ image"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground">{faq.question}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{faq.answer}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

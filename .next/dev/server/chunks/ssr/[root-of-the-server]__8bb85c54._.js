@@ -75,7 +75,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$v0$2d$foundation$2d$website$
 ;
 const metadata = {
     title: "David Mone Foundation | Ending Sickle Cell Disease & Empowering Education",
-    description: "The David Mone Foundation is dedicated to ending Sickle Cell Disease through research, advocacy, and improved care, while providing access to quality education for all children globally.",
+    description: "David Mone Foundation is dedicated to ending Sickle Cell Disease through research, advocacy, and improved care, while providing access to quality education for all children globally.",
     keywords: [
         "Sickle Cell Disease",
         "SCD",

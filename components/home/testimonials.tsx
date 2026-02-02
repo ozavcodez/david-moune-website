@@ -5,7 +5,7 @@ import { Quote } from "lucide-react"
 const testimonials = [
   {
     quote:
-      "The David Mone Foundation changed my daughter's life. With their support, she now receives proper treatment for her Sickle Cell Disease and can attend school regularly.",
+      " David Mone Foundation changed my daughter's life. With their support, she now receives proper treatment for her Sickle Cell Disease and can attend school regularly.",
     author: "Amara Okonkwo",
     role: "Parent, Lagos",
     image: "/african-woman-portrait-professional.jpg",

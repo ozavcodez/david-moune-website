@@ -5,90 +5,58 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Calendar, ArrowRight, Search } from "lucide-react"
+import { getAllArticles, type Article } from "@/lib/articles-data"
 
 export const metadata: Metadata = {
   title: "News & Updates | David Mone Foundation",
   description:
-    "Stay updated with the latest news, stories, and events from the David Mone Foundation's work in Sickle Cell Disease and education.",
+    "Stay updated with the latest news, stories, and events from David Mone Foundation's work in Sickle Cell Disease and education.",
 }
 
-const featuredPost = {
-  title: "David Mone Foundation Reaches 50,000 Lives Milestone",
-  excerpt:
-    "We are thrilled to announce that our programs have now positively impacted over 50,000 lives across Nigeria and Sub-Saharan Africa. This milestone represents years of dedication from our team, partners, and supporters.",
-  date: "December 5, 2025",
-  category: "Announcement",
-  image: "/milestone-celebration-foundation-team.jpg",
-  slug: "50000-lives-milestone",
-}
-
-const posts = [
-  {
-    title: "World Sickle Cell Day 2025: Our Awareness Campaign",
-    excerpt: "This year's World Sickle Cell Day saw our largest awareness campaign yet, reaching over 100,000 people.",
-    date: "June 19, 2025",
-    category: "Campaign",
-    image: "/sickle-cell-day-awareness-event.jpg",
-    slug: "world-sickle-cell-day-2025",
-  },
-  {
-    title: "New Partnership with University of Lagos Medical Center",
-    excerpt: "We're excited to announce a new partnership that will expand SCD treatment access in Lagos State.",
-    date: "May 28, 2025",
-    category: "Partnership",
-    image: "/partnership-announcement-medical.jpg",
-    slug: "unilag-partnership",
-  },
-  {
-    title: "Education Program Expands to Kaduna State",
-    excerpt: "Our education access program now operates in six states, with the recent expansion to Kaduna.",
-    date: "April 15, 2025",
-    category: "Program Update",
-    image: "/education-expansion-kaduna.jpg",
-    slug: "kaduna-expansion",
-  },
-  {
-    title: "Meet Chidinma: From Scholarship Recipient to Medical Student",
-    excerpt: "Chidinma's journey from an out-of-school child to pursuing her dream of becoming a doctor.",
-    date: "March 22, 2025",
-    category: "Impact Story",
-    image: "/chidinma-success-story.jpg",
-    slug: "chidinma-story",
-  },
-  {
-    title: "Research Update: New SCD Treatment Study Shows Promise",
-    excerpt: "Early results from a treatment study we're funding show significant improvements in patient outcomes.",
-    date: "February 10, 2025",
-    category: "Research",
-    image: "/research-laboratory-scd.jpg",
-    slug: "treatment-study-results",
-  },
-  {
-    title: "Annual Report 2024: Year in Review",
-    excerpt: "Our comprehensive review of 2024's achievements, challenges, and the impact we've made together.",
-    date: "January 15, 2025",
-    category: "Report",
-    image: "/annual-report-2024.jpg",
-    slug: "annual-report-2024",
-  },
-]
-
-const categories = ["All", "Announcement", "Campaign", "Partnership", "Program Update", "Impact Story", "Research"]
+const categories = ["All", "news", "events", "education", "healthcare", "research"]
 
 export default function NewsPage() {
+  // Get articles from static data
+  const articles = getAllArticles();
+  
+  // Use first article as featured if available
+  const featuredArticle = articles[0]
+  const remainingArticles = articles.slice(1)
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        {/* Hero */}
-        <section className="bg-foreground py-24 lg:py-32">
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        {/* Hero - Enhanced with background image */}
+        <section className="relative bg-foreground py-24 lg:py-32 overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=1920&h=800&fit=crop"
+              alt="News background"
+              className="w-full h-full object-cover opacity-10"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/95 to-foreground/90" />
+          </div>
+
+          {/* Animated circles */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-20 right-20 w-64 h-64 border-4 border-primary/20 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
+            <div className="absolute bottom-10 left-10 w-48 h-48 border-4 border-accent/20 rounded-full animate-pulse" />
+          </div>
+
+          <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium uppercase tracking-wider text-primary">News & Updates</p>
-              <h1 className="mt-4 font-serif text-4xl font-bold text-background sm:text-5xl text-balance">
-                Stories of Impact & Change
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm mb-6">
+                <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                <p className="text-sm font-bold uppercase tracking-widest text-primary">News & Updates</p>
+              </div>
+              <h1 className="font-serif text-5xl font-bold text-background sm:text-6xl lg:text-7xl text-balance leading-tight">
+                Stories of
+                <span className="block mt-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                  Impact & Change
+                </span>
               </h1>
-              <p className="mt-6 text-lg text-background/80 leading-relaxed">
+              <p className="mt-6 text-xl text-background/80 leading-relaxed">
                 Stay updated with our latest news, success stories, research updates, and upcoming events.
               </p>
             </div>
@@ -121,83 +89,110 @@ export default function NewsPage() {
           </div>
         </section>
 
-        {/* Featured Post */}
-        <section className="py-12">
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
-            <Link href={`/news/${featuredPost.slug}`} className="group block">
-              <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
-                <div className="aspect-[16/10] overflow-hidden rounded-lg">
-                  <img
-                    src={featuredPost.image || "/placeholder.svg"}
-                    alt={featuredPost.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3">
-                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                      {featuredPost.category}
-                    </span>
-                    <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Calendar className="h-4 w-4" />
-                      {featuredPost.date}
-                    </span>
-                  </div>
-                  <h2 className="mt-4 font-serif text-3xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    {featuredPost.title}
-                  </h2>
-                  <p className="mt-4 text-muted-foreground leading-relaxed">{featuredPost.excerpt}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                    Read Article
-                    <ArrowRight className="h-4 w-4" />
-                  </span>
-                </div>
+        {/* Featured Post - Enhanced */}
+        {featuredArticle && (
+          <section className="py-16 lg:py-20">
+            <div className="mx-auto max-w-7xl px-4 lg:px-8">
+              <div className="mb-8">
+                <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-sm font-bold text-primary uppercase tracking-wider">
+                  ⭐ Featured Story
+                </span>
               </div>
-            </Link>
-          </div>
-        </section>
+              <Link href={`/news/${featuredArticle.slug}`} className="group block">
+                <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border-4 border-primary/20 shadow-2xl">
+                    <img
+                      src={featuredArticle.featuredImage || "/placeholder.svg"}
+                      alt={featuredArticle.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="rounded-full bg-gradient-to-r from-primary to-accent px-4 py-1.5 text-xs font-bold text-primary-foreground capitalize shadow-lg">
+                        {featuredArticle.category}
+                      </span>
+                      <span className="flex items-center gap-1.5 text-sm text-muted-foreground font-medium">
+                        <Calendar className="h-4 w-4" />
+                        {new Date(featuredArticle.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </span>
+                    </div>
+                    <h2 className="font-serif text-4xl lg:text-5xl font-black text-foreground group-hover:text-primary transition-colors leading-tight">
+                      {featuredArticle.title}
+                    </h2>
+                    <p className="mt-6 text-lg text-muted-foreground leading-relaxed">{featuredArticle.excerpt}</p>
+                    <div className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-bold text-sm group-hover:shadow-lg transition-all">
+                      Read Full Story
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </section>
+        )}
 
-        {/* All Posts */}
-        <section className="bg-secondary py-16 lg:py-24">
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
-            <h2 className="font-serif text-2xl font-bold text-foreground">Latest Articles</h2>
+        {/* All Posts - Enhanced */}
+        {/* <section className="relative bg-secondary py-16 lg:py-24 overflow-hidden">
+          <div className="absolute top-10 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 left-10 w-64 h-64 bg-accent/5 rounded-full blur-3xl" />
+          
+          <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 className="font-serif text-3xl lg:text-4xl font-black text-foreground">Latest Articles</h2>
+                <p className="mt-2 text-muted-foreground">Explore more stories from our community</p>
+              </div>
+            </div>
             <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <Link key={post.slug} href={`/news/${post.slug}`} className="group">
-                  <article className="rounded-lg bg-card overflow-hidden border border-border hover:shadow-sm transition-shadow">
-                    <div className="aspect-[16/10] overflow-hidden">
+              {remainingArticles.map((article: Article) => (
+                <Link key={article.slug} href={`/news/${article.slug}`} className="group">
+                  <article className="h-full rounded-2xl bg-card overflow-hidden border-2 border-border hover:border-primary/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div className="relative aspect-[16/10] overflow-hidden">
                       <img
-                        src={post.image || "/placeholder.svg"}
-                        alt={post.title}
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        src={article.featuredImage || "/placeholder.svg"}
+                        alt={article.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                     <div className="p-6">
-                      <div className="flex items-center gap-3">
-                        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                          {post.category}
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary capitalize">
+                          {article.category}
                         </span>
-                        <span className="text-xs text-muted-foreground">{post.date}</span>
+                        <span className="text-xs text-muted-foreground font-medium">
+                          {new Date(article.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                          })}
+                        </span>
                       </div>
-                      <h3 className="mt-3 font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                        {post.title}
+                      <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                        {article.title}
                       </h3>
-                      <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
+                      <p className="mt-3 text-sm text-muted-foreground line-clamp-3 leading-relaxed">{article.excerpt}</p>
                     </div>
                   </article>
                 </Link>
               ))}
             </div>
-            <div className="mt-12 text-center">
-              <Button variant="outline" className="bg-transparent">
+            <div className="mt-16 text-center">
+              <Button variant="outline" size="lg" className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-bold px-8 py-6 text-base">
                 Load More Articles
               </Button>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Events Section */}
-        <section className="py-16 lg:py-24" id="events">
+        {/* <section className="py-16 lg:py-24" id="events">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <div className="text-center">
               <p className="text-sm font-medium uppercase tracking-wider text-primary">Events</p>
@@ -244,7 +239,7 @@ export default function NewsPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Newsletter */}
         <section className="bg-primary py-16 lg:py-24">

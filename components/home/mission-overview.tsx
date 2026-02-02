@@ -47,7 +47,7 @@ export function MissionOverview() {
           </div>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight">
             Two Pillars of
-            <span className="block mt-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+            <span className=" block mt-2 text-accent ">
               Transformative Change
             </span>
           </h2>

@@ -2,12 +2,13 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { CheckCircle, CreditCard, Heart, GraduationCap, Microscope, Shield } from "lucide-react"
+import { CheckCircle, CreditCard, Heart, GraduationCap, Microscope, Shield, Loader2 } from "lucide-react"
+import { paystackService, loadPaystackScript } from "@/lib/paystack"
 
 interface Program {
   id: string
@@ -64,10 +65,86 @@ export function DonationForm() {
   const [frequency, setFrequency] = useState("one-time")
   const [program, setProgram] = useState("where-needed-most")
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [scriptLoaded, setScriptLoaded] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: ""
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
+  // Load Paystack script on component mount
+  useEffect(() => {
+    loadPaystackScript()
+      .then(() => setScriptLoaded(true))
+      .catch((error) => {
+        console.error("Failed to load Paystack script:", error);
+      });
+  }, []);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!scriptLoaded) {
+      alert("Payment system is still loading. Please try again.");
+      return;
+    }
+
+    const effectiveAmount = parseFloat(customAmount || amount);
+    
+    if (effectiveAmount <= 0) {
+      alert("Please enter a valid donation amount.");
+      return;
+    }
+
+    if (!paystackService.validateEmail(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      paystackService.initializePayment({
+        email: formData.email,
+        amount: paystackService.formatAmount(effectiveAmount),
+        firstname: formData.firstName,
+        lastname: formData.lastName,
+        metadata: {
+          donor_email: formData.email,
+          donor_first_name: formData.firstName,
+          donor_last_name: formData.lastName,
+          program: program,
+          frequency: frequency
+        },
+        callback: (response) => {
+          // Payment successful
+          console.log("Payment successful:", response);
+          setLoading(false);
+          setSubmitted(true);
+          
+          // Here you would typically send the transaction details to your backend
+          // to verify and record the payment
+          console.log("Transaction reference:", response.reference);
+        },
+        onClose: () => {
+          // Payment cancelled
+          setLoading(false);
+          console.log("Payment cancelled");
+        }
+      });
+    } catch (error) {
+      console.error("Payment initialization error:", error);
+      setLoading(false);
+      alert("Failed to initialize payment. Please try again.");
+    }
   }
 
   const effectiveAmount = customAmount || amount
@@ -79,11 +156,19 @@ export function DonationForm() {
           <CheckCircle className="h-16 w-16 text-accent animate-in zoom-in duration-700" />
           <div className="absolute inset-0 h-16 w-16 text-accent animate-ping opacity-20" />
         </div>
-        <h3 className="mt-6 font-serif text-2xl font-bold text-foreground">Thank You!</h3>
+        <h3 className="mt-6 font-serif text-2xl font-bold text-foreground">Payment Successful!</h3>
         <p className="mt-3 text-muted-foreground">
-          Your donation of ${effectiveAmount} will make a real difference. You'll receive a confirmation email shortly.
+          Thank you for your generous donation of ${effectiveAmount}. Your contribution will make a real difference in our programs. A receipt has been sent to your email.
         </p>
-        <Button onClick={() => setSubmitted(false)} className="mt-6 btn-shine" variant="outline">
+        <div className="mt-4 p-4 bg-success/10 rounded-lg border border-success/20">
+          <p className="text-sm text-success font-medium">Transaction completed successfully</p>
+        </div>
+        <Button onClick={() => {
+          setSubmitted(false);
+          setCustomAmount("");
+          setAmount("100");
+          setFormData({ firstName: "", lastName: "", email: "" });
+        }} className="mt-6 btn-shine" variant="outline">
           Make Another Donation
         </Button>
       </div>
@@ -193,20 +278,39 @@ export function DonationForm() {
             <Label htmlFor="donorFirstName" className="text-sm font-medium">
               First Name
             </Label>
-            <Input id="donorFirstName" required className="input-focus transition-shadow" />
+            <Input 
+              id="donorFirstName" 
+              required 
+              className="input-focus transition-shadow"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange("firstName", e.target.value)}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="donorLastName" className="text-sm font-medium">
               Last Name
             </Label>
-            <Input id="donorLastName" required className="input-focus transition-shadow" />
+            <Input 
+              id="donorLastName" 
+              required 
+              className="input-focus transition-shadow"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange("lastName", e.target.value)}
+            />
           </div>
         </div>
         <div className="space-y-2">
           <Label htmlFor="donorEmail" className="text-sm font-medium">
             Email
           </Label>
-          <Input id="donorEmail" type="email" required className="input-focus transition-shadow" />
+          <Input 
+              id="donorEmail" 
+              type="email" 
+              required 
+              className="input-focus transition-shadow"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+          />
         </div>
       </div>
 
@@ -221,8 +325,20 @@ export function DonationForm() {
         </p>
       </div>
 
-      <Button type="submit" size="lg" className="mt-6 w-full btn-shine hover-lift shadow-lg hover:shadow-xl">
-        Donate ${effectiveAmount || "0"} {frequency === "monthly" && "Monthly"}
+      <Button 
+        type="submit" 
+        size="lg" 
+        disabled={loading || !scriptLoaded}
+        className="mt-6 w-full btn-shine hover-lift shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Processing...
+          </>
+        ) : (
+          <>Donate ${effectiveAmount || "0"} {frequency === "monthly" && "Monthly"}</>
+        )}
       </Button>
 
       <p className="mt-4 text-center text-xs text-muted-foreground">

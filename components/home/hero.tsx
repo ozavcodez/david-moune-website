@@ -11,12 +11,12 @@ export function Hero() {
       {/* Background Image with enhanced overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/african-children-smiling-education-classroom-warm-.jpg"
-          alt=""
+          src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1920&h=1080&fit=crop&q=80"
+          alt="Children learning in classroom"
           className="h-full w-full object-cover scale-105 animate-[pulse_20s_ease-in-out_infinite]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/75 to-primary/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
       </div>
 
       <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl animate-float" />
@@ -44,7 +44,7 @@ export function Hero() {
 
           <Animated animation="fade-right" delay={300}>
             <p className="mt-6 text-lg leading-relaxed text-background/90 max-w-xl">
-              The David Mone Foundation is committed to ending Sickle Cell Disease through research and advocacy, while
+              David Mone Foundation is committed to ending Sickle Cell Disease through research and advocacy, while
               ensuring every child has access to quality education.
             </p>
           </Animated>
@@ -89,23 +89,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:block">
-        <div className="flex flex-col items-center gap-2 text-background/60 animate-bounce">
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <div className="w-6 h-10 rounded-full border-2 border-background/30 flex items-start justify-center p-1">
-            <div className="w-1.5 h-3 rounded-full bg-accent animate-pulse" />
-          </div>
-        </div>
-      </div>
 
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg className="w-full h-12 text-background" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-      </div>
     </section>
   )
 }

@@ -24,10 +24,9 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { name: "Facebook", icon: Facebook, href: "#" },
-  { name: "Twitter", icon: Twitter, href: "#" },
-  { name: "Instagram", icon: Instagram, href: "#" },
-  { name: "LinkedIn", icon: Linkedin, href: "#" },
+  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/share/17VeVSu98E/?mibextid=wwXIfr" },
+  { name: "Twitter", icon: Twitter, href: "https://x.com/dminefoundation?s=21" },
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/davidmonefoundation?igsh=eWxqZWtjZ3BhcDJs&utm_source=qr" },
 ]
 
 export function Footer() {

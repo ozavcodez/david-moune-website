@@ -6,6 +6,7 @@ import { MissionOverview } from "@/components/home/mission-overview"
 import { Testimonials } from "@/components/home/testimonials"
 import { CTASection } from "@/components/home/cta-section"
 import { Newsletter } from "@/components/home/newsletter"
+import { FoundationComplex } from "@/components/home/foundation-complex"
 
 export default function HomePage() {
   return (
@@ -14,8 +15,9 @@ export default function HomePage() {
       <main className="flex-1">
         <Hero />
         <ImpactStats />
-        <MissionOverview />
+        <FoundationComplex />
         {/* <Testimonials /> */}
+        <MissionOverview />
         <CTASection />
         <Newsletter />
       </main>

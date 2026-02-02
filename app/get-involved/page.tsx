@@ -9,7 +9,7 @@ import { Users, Heart, Briefcase, Calendar, MapPin, Clock } from "lucide-react"
 export const metadata: Metadata = {
   title: "Get Involved | David Mone Foundation",
   description:
-    "Join the David Mone Foundation as a volunteer, partner, or supporter. Make a difference in the fight against Sickle Cell Disease and for education access.",
+    "Join David Mone Foundation as a volunteer, partner, or supporter. Make a difference in the fight against Sickle Cell Disease and for education access.",
 }
 
 const volunteerOpportunities = [
@@ -127,19 +127,35 @@ export default function GetInvolvedPage() {
                 </p>
 
                 <div className="mt-8 space-y-4">
-                  {volunteerOpportunities.map((opp) => (
+                  {volunteerOpportunities.map((opp, index) => (
                     <div key={opp.title} className="rounded-lg bg-card p-4 border border-border">
-                      <h4 className="font-semibold text-foreground">{opp.title}</h4>
-                      <p className="mt-1 text-sm text-muted-foreground">{opp.description}</p>
-                      <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {opp.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {opp.commitment}
-                        </span>
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                          <img
+                            src={
+                              index === 0 ? "/professional-african-man-researcher-scientist-port.jpg" :
+                              index === 1 ? "/african-children-in-classroom-learning-education-s.jpg" :
+                              index === 2 ? "/community-gathering-african-village-children-educa.jpg" :
+                              "/professional-african-man-educator-portrait.jpg"
+                            }
+                            alt="Volunteer opportunity"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground">{opp.title}</h4>
+                          <p className="mt-1 text-sm text-muted-foreground">{opp.description}</p>
+                          <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <MapPin className="h-3 w-3" />
+                              {opp.location}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {opp.commitment}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -171,13 +187,24 @@ export default function GetInvolvedPage() {
             </div>
 
             <div className="mt-12 grid gap-8 md:grid-cols-3">
-              {partnershipTypes.map((type) => (
+              {partnershipTypes.map((type, index) => (
                 <div key={type.title} className="rounded-lg border border-border p-6 text-center">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
                     <type.icon className="h-7 w-7 text-primary" />
                   </div>
                   <h3 className="mt-4 font-semibold text-foreground">{type.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{type.description}</p>
+                  <div className="mt-4 h-32 overflow-hidden rounded-lg">
+                    <img
+                      src={
+                        index === 0 ? "/ngo-1.jpg" :
+                        index === 1 ? "/african-female-doctor-portrait-professional.jpg" :
+                        "/ngo-17.jpg"
+                      }
+                      alt={type.title}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
@@ -195,7 +222,7 @@ export default function GetInvolvedPage() {
         </section>
 
         {/* Events */}
-        <section className="bg-primary py-16 lg:py-24">
+        {/* <section className="bg-primary py-16 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <div className="text-center text-primary-foreground">
               <p className="text-sm font-medium uppercase tracking-wider opacity-80">Upcoming Events</p>
@@ -245,7 +272,7 @@ export default function GetInvolvedPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
       <Footer />
     </div>

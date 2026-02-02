@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Heart, GraduationCap, ArrowRight, Users, Globe, TrendingUp } from "lucide-react"
+import { Heart, GraduationCap, ArrowRight, Users, Globe, TrendingUp, Building2 } from "lucide-react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const programs = [
@@ -34,6 +34,19 @@ const programs = [
     ],
     image: "/ngo-15.jpg",
   },
+  {
+    icon: Building2,
+    title: "Foundation Complex",
+    description:
+      "A comprehensive ecosystem combining healthcare, education, research, and community support. Our revolutionary Sport-Integrated School recognizes that intellect comes in many forms, offering pathways for children to succeed in academics, arts, technical skills, or sports.",
+    href: "/programs/sport-integrated-school",
+    stats: [
+      { label: "School Components", value: "5" },
+      { label: "Sports Facilities", value: "6+" },
+      { label: "Partnerships", value: "Global" },
+    ],
+    image: "/building.jpeg",
+  },
 ]
 
 const globalStats = [
@@ -60,9 +73,11 @@ export default function ProgramsPage() {
   const [outreachRef, outreachVisible] = useScrollAnimation<HTMLElement>({ threshold: 0.2 })
   const [program0Ref, program0Visible] = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 })
   const [program1Ref, program1Visible] = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 })
+  const [program2Ref, program2Visible] = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 })
   const programRefs = [
     [program0Ref, program0Visible],
     [program1Ref, program1Visible],
+    [program2Ref, program2Visible],
   ] as const
 
   return (
@@ -70,8 +85,18 @@ export default function ProgramsPage() {
       <Header />
       <main className="flex-1">
         {/* Hero with skew animation */}
-        <section ref={heroRef} className="bg-foreground py-24 lg:py-32 overflow-hidden">
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <section ref={heroRef} className="relative bg-foreground py-24 lg:py-32 overflow-hidden">
+          {/* Background image */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src="/ngo-1.jpg"
+              alt="Programs and initiatives"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-foreground/75" />
+          </div>
+          
+          <div className="relative z-10 mx-auto max-w-7xl px-4 lg:px-8">
             <div className="max-w-3xl">
               <p
                 className={`text-sm font-medium uppercase tracking-wider text-primary opacity-0 ${heroVisible ? "animate-skew-in" : ""}`}

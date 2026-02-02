@@ -146,6 +146,12 @@ export function StaggeredContainer({
 }: StaggeredContainerProps) {
   const [ref, isVisible] = useScrollAnimation<HTMLDivElement>({ threshold })
   const variant = animationVariants[animation]
+  
+  // Handle undefined or null children
+  if (!children) {
+    return <div ref={ref} className={className} />;
+  }
+  
   const childrenArray = Array.isArray(children) ? children : [children]
 
   return (

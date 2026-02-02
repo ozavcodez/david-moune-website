@@ -11,7 +11,7 @@ import { Timeline } from "@/components/about/timeline"
 export const metadata: Metadata = {
   title: "About Us | David Mone Foundation",
   description:
-    "Learn about the David Mone Foundation's mission to end Sickle Cell Disease and provide quality education access. Meet our team and discover our story.",
+    "Learn about David Mone Foundation's mission to end Sickle Cell Disease and provide quality education access. Meet our team and discover our story.",
 }
 
 export default function AboutPage() {
@@ -23,7 +23,7 @@ export default function AboutPage() {
         <OurStory />
         <MissionVision />
         {/* <Timeline /> */}
-        <TeamSection />
+        {/* <TeamSection /> */}
         <Partners />
       </main>
       <Footer />

@@ -16,30 +16,57 @@ export function OurStory() {
                 From Personal Experience to Global Impact
               </h2>
               <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
-                <p
-                  className={`opacity-0 ${isVisible ? "animate-blur-in" : ""}`}
-                  style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
-                >
-                  The David Mone Foundation began as a response to the profound challenges faced by families dealing
-                  with Sickle Cell Disease in Nigeria and across Sub-Saharan Africa. Our founder witnessed firsthand the
-                  lack of awareness, inadequate healthcare, and limited support available to those living with SCD.
-                </p>
-                <p
-                  className={`opacity-0 ${isVisible ? "animate-blur-in" : ""}`}
-                  style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
-                >
-                  Recognizing that health and education are fundamentally interconnected, we expanded our mission to
-                  address the crisis of out-of-school children. We believe that a healthy, educated population is the
-                  foundation of sustainable development.
-                </p>
-                <p
-                  className={`opacity-0 ${isVisible ? "animate-blur-in" : ""}`}
-                  style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}
-                >
-                  Today, we work with communities, healthcare providers, educators, and government bodies to create
-                  systemic change. Our approach combines direct intervention with advocacy, research, and capacity
-                  building to ensure our impact is both immediate and lasting.
-                </p>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                    <img
+                      src="/building.jpeg"
+                      alt="Foundation beginnings"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <p
+                    className={`opacity-0 ${isVisible ? "animate-blur-in" : ""}`}
+                    style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+                  >
+                     David Mone Foundation began as a response to the profound challenges faced by families dealing
+                    with Sickle Cell Disease in Nigeria and across Sub-Saharan Africa. Our founder witnessed firsthand the
+                    lack of awareness, inadequate healthcare, and limited support available to those living with SCD.
+                  </p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                    <img
+                      src="/ngo-5.jpg"
+                      alt="Education connection"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <p
+                    className={`opacity-0 ${isVisible ? "animate-blur-in" : ""}`}
+                    style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
+                  >
+                    Recognizing that health and education are fundamentally interconnected, we expanded our mission to
+                    address the crisis of out-of-school children. We believe that a healthy, educated population is the
+                    foundation of sustainable development.
+                  </p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                    <img
+                      src="/ngo-12.jpg"
+                      alt="Global impact"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <p
+                    className={`opacity-0 ${isVisible ? "animate-blur-in" : ""}`}
+                    style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}
+                  >
+                    Today, we work with communities, healthcare providers, educators, and government bodies to create
+                    systemic change. Our approach combines direct intervention with advocacy, research, and capacity
+                    building to ensure our impact is both immediate and lasting.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
