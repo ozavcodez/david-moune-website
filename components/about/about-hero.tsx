@@ -24,7 +24,7 @@ export function AboutHero() {
         {/* Right - Image */}
         <div className="absolute inset-y-0 right-0 w-full lg:w-1/2">
           <Image
-            src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&h=1200&fit=crop"
+            src="/purp-5.jpeg"
             alt="Foundation impact"
             width={1200}
             height={1200}

@@ -3,7 +3,10 @@ import { connectDB } from '../../../backend/config/database';
 import { initializePayment, verifyPayment, handleWebhook, getDonationStats } from '../../../backend/controllers/nextDonationController';
 
 export async function POST(request: NextRequest) {
-  await connectDB();
+  const dbReady = await connectDB();
+  if (!dbReady) {
+    console.warn('Donation route running without MongoDB persistence.');
+  }
   
   const { pathname } = new URL(request.url);
   const pathParts = pathname.split('/');
@@ -26,7 +29,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  await connectDB();
+  const dbReady = await connectDB();
+  if (!dbReady) {
+    console.warn('Donation verification route running without MongoDB persistence.');
+  }
   
   const { pathname } = new URL(request.url);
   const pathParts = pathname.split('/');

@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { CheckCircle, CreditCard, Heart, GraduationCap, Microscope, Shield, Loader2 } from "lucide-react"
 import { paystackService, loadPaystackScript } from "@/lib/paystack"
+import { Toaster, toast } from "sonner"
 
 interface Program {
   id: string
@@ -57,13 +58,19 @@ function ProgramIcon({ iconId, className }: { iconId: Program["iconId"]; classNa
   }
 }
 
-const amounts = ["25", "50", "100", "250", "500", "1000"]
+// Currency-specific amount options
+const getAmountOptions = (currency: "USD" | "NGN") => {
+  return currency === "NGN"
+    ? ["5000", "10000", "25000", "50000", "100000", "250000"] // NGN amounts
+    : ["25", "50", "100", "250", "500", "1000"] // USD amounts
+}
 
 export function DonationForm() {
-  const [amount, setAmount] = useState("100")
+  const [amount, setAmount] = useState("100") // Default USD amount
   const [customAmount, setCustomAmount] = useState("")
   const [frequency, setFrequency] = useState("one-time")
   const [program, setProgram] = useState("where-needed-most")
+  const [currency, setCurrency] = useState<"USD" | "NGN">("NGN")   // ✅ CHANGED: default to NGN
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [scriptLoaded, setScriptLoaded] = useState(false)
@@ -82,68 +89,76 @@ export function DonationForm() {
       });
   }, []);
 
+  const handleCurrencyChange = (newCurrency: "USD" | "NGN") => {
+    if (newCurrency === "USD") {
+      toast.info("USD payments are currently unavailable with the configured Paystack account. Please use NGN for now.")
+      return
+    }
+
+    setCurrency(newCurrency)
+    // Reset amount when currency changes
+    setAmount(newCurrency === "NGN" ? "25000" : "100")
+    setCustomAmount("")
+  }
+
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
-    }));
-  };
+      [field]: value,
+    }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!scriptLoaded) {
-      alert("Payment system is still loading. Please try again.");
-      return;
-    }
-
     const effectiveAmount = parseFloat(customAmount || amount);
     
     if (effectiveAmount <= 0) {
-      alert("Please enter a valid donation amount.");
+      toast.error("Please enter a valid donation amount.");
       return;
     }
 
     if (!paystackService.validateEmail(formData.email)) {
-      alert("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
     setLoading(true);
 
     try {
-      paystackService.initializePayment({
-        email: formData.email,
-        amount: paystackService.formatAmount(effectiveAmount),
-        firstname: formData.firstName,
-        lastname: formData.lastName,
-        metadata: {
-          donor_email: formData.email,
-          donor_first_name: formData.firstName,
-          donor_last_name: formData.lastName,
+      // Call backend API to initialize payment
+      const response = await fetch('/api/donations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: paystackService.formatAmount(effectiveAmount, currency),
+          currency: currency,
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           program: program,
-          frequency: frequency
-        },
-        callback: (response) => {
-          // Payment successful
-          console.log("Payment successful:", response);
-          setLoading(false);
-          setSubmitted(true);
-          
-          // Here you would typically send the transaction details to your backend
-          // to verify and record the payment
-          console.log("Transaction reference:", response.reference);
-        },
-        onClose: () => {
-          // Payment cancelled
-          setLoading(false);
-          console.log("Payment cancelled");
-        }
+          frequency: frequency,
+        }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.details || data.message || 'Failed to initialize payment');
+      }
+
+      if (data.status) {
+        // Redirect to Paystack payment page
+        window.location.href = data.data.authorization_url;
+      } else {
+        throw new Error(data.message || 'Failed to initialize payment');
+      }
     } catch (error) {
       console.error("Payment initialization error:", error);
       setLoading(false);
-      alert("Failed to initialize payment. Please try again.");
+      toast.error(error instanceof Error ? error.message : "Failed to initialize payment. Please try again.");
     }
   }
 
@@ -158,7 +173,7 @@ export function DonationForm() {
         </div>
         <h3 className="mt-6 font-serif text-2xl font-bold text-foreground">Payment Successful!</h3>
         <p className="mt-3 text-muted-foreground">
-          Thank you for your generous donation of ${effectiveAmount}. Your contribution will make a real difference in our programs. A receipt has been sent to your email.
+          Thank you for your generous donation of {currency === "NGN" ? "₦" : "$"}{effectiveAmount}. Your contribution will make a real difference in our programs. A receipt has been sent to your email.
         </p>
         <div className="mt-4 p-4 bg-success/10 rounded-lg border border-success/20">
           <p className="text-sm text-success font-medium">Transaction completed successfully</p>
@@ -176,10 +191,12 @@ export function DonationForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-lg border-2 border-border p-6 shadow-lg hover:shadow-xl transition-shadow"
-    >
+    <>
+      <Toaster position="top-right" richColors closeButton />
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-lg border-2 border-border p-6 shadow-lg hover:shadow-xl transition-shadow"
+      >
       <h2 className="font-serif text-2xl font-bold text-foreground">Make a Donation</h2>
 
       {/* Frequency */}
@@ -203,11 +220,39 @@ export function DonationForm() {
         </div>
       </div>
 
+      {/* Currency */}
+      <div className="mt-6">
+        <Label className="text-sm font-semibold">Currency</Label>
+        <div className="mt-3 flex gap-2">
+          {[
+            { code: "NGN", symbol: "₦", name: "Nigerian Naira", available: true },
+            { code: "USD", symbol: "$", name: "US Dollar", available: false }
+          ].map((curr) => (
+            <button
+              key={curr.code}
+              type="button"
+              disabled={!curr.available}
+              onClick={() => handleCurrencyChange(curr.code as "USD" | "NGN")}
+              className={`flex-1 rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                currency === curr.code
+                  ? "bg-primary text-primary-foreground shadow-md scale-105"
+                  : "bg-secondary text-secondary-foreground hover:bg-muted hover:scale-102"
+              } ${!curr.available ? "cursor-not-allowed opacity-60" : ""}`}
+            >
+              {curr.symbol} {curr.name}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          USD payments are temporarily unavailable with the current Paystack merchant setup.
+        </p>
+      </div>
+
       {/* Amount */}
       <div className="mt-6">
         <Label className="text-sm font-semibold">Select Amount</Label>
         <div className="mt-3 grid grid-cols-3 gap-2">
-          {amounts.map((amt) => (
+          {getAmountOptions(currency).map((amt) => (
             <button
               key={amt}
               type="button"
@@ -221,7 +266,7 @@ export function DonationForm() {
                   : "bg-secondary text-secondary-foreground hover:bg-muted hover:scale-102 hover:shadow-sm"
               }`}
             >
-              ${amt}
+              {currency === "NGN" ? "₦" : "$"}{parseInt(amt).toLocaleString()}
             </button>
           ))}
         </div>
@@ -230,7 +275,9 @@ export function DonationForm() {
             Or enter custom amount
           </Label>
           <div className="relative mt-2">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
+              {currency === "NGN" ? "₦" : "$"}
+            </span>
             <Input
               id="custom"
               type="number"
@@ -321,7 +368,8 @@ export function DonationForm() {
           <span className="font-medium">Secure payment processing</span>
         </div>
         <p className="mt-2 text-xs text-muted-foreground">
-          Payment will be securely processed. You'll be redirected to complete your donation.
+          Payment will be securely processed in {currency === "NGN" ? "Nigerian Naira" : "US Dollars"}.
+          {currency === "USD" && " International payments may incur additional fees."}
         </p>
       </div>
 
@@ -337,13 +385,14 @@ export function DonationForm() {
             Processing...
           </>
         ) : (
-          <>Donate ${effectiveAmount || "0"} {frequency === "monthly" && "Monthly"}</>
+          <>Donate {currency === "NGN" ? "₦" : "$"}{effectiveAmount} {frequency === "monthly" && "Monthly"}</>
         )}
       </Button>
 
       <p className="mt-4 text-center text-xs text-muted-foreground">
         Your donation is tax-deductible. You will receive a receipt via email.
       </p>
-    </form>
+      </form>
+    </>
   )
 }

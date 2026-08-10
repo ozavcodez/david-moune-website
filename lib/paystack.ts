@@ -1,6 +1,10 @@
 declare global {
   interface Window {
-    PaystackPop: any;
+    PaystackPop?: {
+      setup: (config: PaystackConfig) => {
+        openIframe: () => void;
+      };
+    };
   }
 }
 
@@ -52,9 +56,15 @@ export class PaystackService {
     handler.openIframe();
   }
 
-  formatAmount(amount: string | number): number {
-    // Convert to kobo (smallest currency unit) - multiply by 100
+  formatAmount(amount: string | number, currency: 'USD' | 'NGN' = 'NGN'): number {
     const numericAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
+
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+      return 0;
+    }
+
+    // Paystack expects the amount in the smallest currency unit for the selected currency.
+    // For NGN this is kobo; for USD this is cents.
     return Math.round(numericAmount * 100);
   }
 

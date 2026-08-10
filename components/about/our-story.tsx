@@ -19,7 +19,7 @@ export function OurStory() {
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
                     <img
-                      src="/building.jpeg"
+                      src="/purp-6.jpeg"
                       alt="Foundation beginnings"
                       className="h-full w-full object-cover"
                     />
@@ -36,7 +36,7 @@ export function OurStory() {
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
                     <img
-                      src="/ngo-5.jpg"
+                      src="/purp-7.jpeg"
                       alt="Education connection"
                       className="h-full w-full object-cover"
                     />
@@ -53,7 +53,7 @@ export function OurStory() {
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
                     <img
-                      src="/ngo-12.jpg"
+                      src="/purp-8.jpeg"
                       alt="Global impact"
                       className="h-full w-full object-cover"
                     />
@@ -77,7 +77,7 @@ export function OurStory() {
           >
             <div className="aspect-[4/3] overflow-hidden rounded-lg group">
               <img
-                src="/ngo-8.jpg"
+                src="/purp-9.jpeg"
                 alt="Community gathering"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               />

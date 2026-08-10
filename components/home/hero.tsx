@@ -11,7 +11,7 @@ export function Hero() {
       {/* Background Image with enhanced overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1920&h=1080&fit=crop&q=80"
+          src="/purp-1.jpeg"
           alt="Children learning in classroom"
           className="h-full w-full object-cover scale-105 animate-[pulse_20s_ease-in-out_infinite]"
         />

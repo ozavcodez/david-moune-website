@@ -36,11 +36,15 @@ export const initializePayment = async (req: Request, res: Response): Promise<vo
       phone,
       program,
       frequency,
+      currency,
       callbackUrl
     } = req.body;
 
+    const normalizedCurrency = String(currency || 'NGN').toUpperCase();
+    const normalizedAmount = Number(amount);
+
     // Validate required fields
-    if (!amount || !email || !firstName || !lastName) {
+    if (!normalizedAmount || !email || !firstName || !lastName) {
       res.status(400).json({ message: 'Missing required fields' });
       return;
     }
@@ -52,15 +56,28 @@ export const initializePayment = async (req: Request, res: Response): Promise<vo
       return;
     }
 
-    // Validate amount (minimum 100 kobo = 1 NGN)
-    if (amount < 100) {
-      res.status(400).json({ message: 'Minimum donation is 1 NGN' });
+    if (!['NGN', 'USD'].includes(normalizedCurrency)) {
+      res.status(400).json({ message: 'Unsupported currency' });
+      return;
+    }
+
+    // Validate amount (minimum 100 smallest units = $1 or ₦1)
+    if (normalizedAmount < 100) {
+      res.status(400).json({ message: 'Minimum donation is 1.00 in the selected currency' });
+      return;
+    }
+
+    // Ensure Paystack secret key is configured
+    const paystackKey = process.env.PAYSTACK_SECRET_KEY;
+    if (!paystackKey) {
+      res.status(500).json({ message: 'Paystack secret key is not configured. Set PAYSTACK_SECRET_KEY in your environment.' });
       return;
     }
 
     // Create a temporary donation record
     const tempDonation = new Donation({
-      amount,
+      amount: normalizedAmount,
+      currency: normalizedCurrency,
       email,
       firstName,
       lastName,
@@ -76,11 +93,12 @@ export const initializePayment = async (req: Request, res: Response): Promise<vo
 
     // Prepare Paystack request
     const paystackData = {
-      amount,
+      amount: normalizedAmount,
       email,
       firstname: firstName,
       lastname: lastName,
       phone,
+      currency: normalizedCurrency,
       metadata: {
         donor_email: email,
         donor_first_name: firstName,
@@ -99,7 +117,7 @@ export const initializePayment = async (req: Request, res: Response): Promise<vo
       paystackData,
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          Authorization: `Bearer ${paystackKey}`,
           'Content-Type': 'application/json'
         }
       }

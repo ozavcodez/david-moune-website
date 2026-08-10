@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose, { Schema, model, Document } from 'mongoose';
 
 export interface IDonation extends Document {
   amount: number;
@@ -88,4 +88,9 @@ DonationSchema.index({ email: 1 });
 DonationSchema.index({ status: 1 });
 DonationSchema.index({ createdAt: -1 });
 
-export default model<IDonation>('Donation', DonationSchema);
+// Avoid OverwriteModelError in development/HMR by reusing existing model when available
+const DonationModel = (mongoose.models && (mongoose.models as any).Donation)
+  ? (mongoose.models as any).Donation
+  : model<IDonation>('Donation', DonationSchema);
+
+export default DonationModel;
